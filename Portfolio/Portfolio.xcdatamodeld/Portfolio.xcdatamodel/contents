@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CityList" representedClassName="CityListMO" syncable="YES" codeGenerationType="class">
+        <attribute name="cityCode" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cityName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="dongList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DongList" inverseName="cityList" inverseEntity="DongList" syncable="YES"/>
+    </entity>
+    <entity name="DongList" representedClassName="DongListMO" syncable="YES" codeGenerationType="class">
+        <attribute name="dongCode" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dongName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cityList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CityList" inverseName="dongList" inverseEntity="CityList" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CityList" positionX="179.9453125" positionY="-38.7578125" width="128" height="88"/>
+        <element name="DongList" positionX="-27" positionY="18" width="128" height="88"/>
+    </elements>
 </model>
