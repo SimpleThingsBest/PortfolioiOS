@@ -12,6 +12,6 @@
     </entity>
     <elements>
         <element name="CityList" positionX="179.9453125" positionY="-38.7578125" width="128" height="88"/>
-        <element name="DongList" positionX="-27" positionY="18" width="128" height="88"/>
+        <element name="DongList" positionX="-27" positionY="18" width="128" height="90"/>
     </elements>
 </model>

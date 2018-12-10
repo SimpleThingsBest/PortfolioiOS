@@ -19,6 +19,10 @@
 		3F3AE23321B126CE00446868 /* Portfolio.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F3AE23121B126CE00446868 /* Portfolio.xcdatamodeld */; };
 		3F3AE23521B126CE00446868 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3AE23421B126CE00446868 /* Assets.xcassets */; };
 		3F3AE23821B126CE00446868 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3AE23621B126CE00446868 /* LaunchScreen.storyboard */; };
+		3FE98DB621BE470A007CC019 /* ResultVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE98DB521BE470A007CC019 /* ResultVO.swift */; };
+		3FE98DB921BE62ED007CC019 /* NewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE98DB821BE62ED007CC019 /* NewsController.swift */; };
+		3FE98DBD21BE6554007CC019 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE98DBC21BE6554007CC019 /* NewsCell.swift */; };
+		3FE98DBF21BE6888007CC019 /* NewsDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE98DBE21BE6888007CC019 /* NewsDetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		3F3AE23421B126CE00446868 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F3AE23721B126CE00446868 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F3AE23921B126CE00446868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FE98DB521BE470A007CC019 /* ResultVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVO.swift; sourceTree = "<group>"; };
+		3FE98DB821BE62ED007CC019 /* NewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsController.swift; sourceTree = "<group>"; };
+		3FE98DBC21BE6554007CC019 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		3FE98DBE21BE6888007CC019 /* NewsDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailController.swift; sourceTree = "<group>"; };
 		4705829C4DDEFB1EDA6A2496 /* Pods-Portfolio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Portfolio.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Portfolio/Pods-Portfolio.debug.xcconfig"; sourceTree = "<group>"; };
 		5B70D0A04174F0A95BBFD1D5 /* Pods_Portfolio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Portfolio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0DB73EF418A0AA771C1297D /* Pods-Portfolio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Portfolio.release.xcconfig"; path = "Pods/Target Support Files/Pods-Portfolio/Pods-Portfolio.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +108,7 @@
 		3F3AE22921B126CE00446868 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
+				3FE98DB721BE62BF007CC019 /* News */,
 				3F2217CD21B53FA9002C5C00 /* data */,
 				3F153D6A21B3C45800E3A756 /* FoodPoisoning */,
 				3F3AE22A21B126CE00446868 /* AppDelegate.swift */,
@@ -109,8 +118,19 @@
 				3F3AE23621B126CE00446868 /* LaunchScreen.storyboard */,
 				3F3AE23921B126CE00446868 /* Info.plist */,
 				3F3AE23121B126CE00446868 /* Portfolio.xcdatamodeld */,
+				3FE98DB521BE470A007CC019 /* ResultVO.swift */,
 			);
 			path = Portfolio;
+			sourceTree = "<group>";
+		};
+		3FE98DB721BE62BF007CC019 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				3FE98DB821BE62ED007CC019 /* NewsController.swift */,
+				3FE98DBC21BE6554007CC019 /* NewsCell.swift */,
+				3FE98DBE21BE6888007CC019 /* NewsDetailController.swift */,
+			);
+			path = News;
 			sourceTree = "<group>";
 		};
 		B93F55026EE3C89FFB2A0890 /* Pods */ = {
@@ -244,6 +264,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE98DB921BE62ED007CC019 /* NewsController.swift in Sources */,
+				3FE98DBF21BE6888007CC019 /* NewsDetailController.swift in Sources */,
+				3FE98DBD21BE6554007CC019 /* NewsCell.swift in Sources */,
+				3FE98DB621BE470A007CC019 /* ResultVO.swift in Sources */,
 				3F153D7021B3C64600E3A756 /* FoodPoisoningVO.swift in Sources */,
 				3F153D7621B4F54400E3A756 /* FoodPoisoningController.swift in Sources */,
 				3F3AE23321B126CE00446868 /* Portfolio.xcdatamodeld in Sources */,

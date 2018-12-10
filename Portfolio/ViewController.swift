@@ -11,7 +11,16 @@ import Alamofire
 import CoreData
 
 class ViewController: UIViewController {
-    
+    //news 버튼 클릭 이벤트
+    @IBAction func newsBtn(_ sender: Any) {
+        //news 뷰 객체 만들기
+        let news = self.storyboard?.instantiateViewController(withIdentifier: "NewsController")
+        //네비게이션 버튼 수정
+        self.navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "메인화면", style: .done, target: nil, action: nil)
+        //페이지 이동
+        self.navigationController?.pushViewController(news!, animated: true)
+        
+    }
     //로그인 정보를 저장 할 저장소 - viewDidLoad에서 생성
     var userDefaults : UserDefaults? = UserDefaults.standard
     //공유변수 사용을 위한 AppDelegate 객체 생성
@@ -25,41 +34,6 @@ class ViewController: UIViewController {
     //버튼을 눌렀을 때 정보를 받거나 로그아웃처리를 함.
     
     var totalCount : Int?
-    /*
-    func foodPoisoningDownload(){
-        //api 다운로드
-        //URL을 생성해서 다운로드 받기
-        //다운로드 받을 URL 만들기
-        let cnt = "http://apis.data.go.kr/B550928/dissForecastInfoSvc/getDissForecastInfo?serviceKey=m%2BAB97QjVAk8g8IGN9PTm5H%2BdfLsRRkZVWVXfhPqgvcko5uRCLo7ai4ak%2FS57jyNOqKLxq7xiDzPRyUqDrQbZw%3D%3D&numOfRows=1&pageNo=1&type=json&dissCd=3"
-        
-        let url = "http://apis.data.go.kr/B550928/dissForecastInfoSvc/getDissForecastInfo?serviceKey=m%2BAB97QjVAk8g8IGN9PTm5H%2BdfLsRRkZVWVXfhPqgvcko5uRCLo7ai4ak%2FS57jyNOqKLxq7xiDzPRyUqDrQbZw%3D%3D&numOfRows=\(totalCount)&pageNo=1&type=json&dissCd=3"
-        
-        let cntURI : URL! = URL(string: cnt)
-        let apiURi : URL! = URL(string: url)
-        
-        //REST API를 호출
-        let cntdata = try! Data(contentsOf: cntURI)
-        let apidata = try! Data(contentsOf: apiURi)
-        //예외처리
-        do{
-            //전체 데이터를 디셔너리로 만들기
-            let cntDict =
-                try JSONSerialization.jsonObject(with: cntdata, options: []) as! NSDictionary
-            //response 키의 값을 디셔너리로 가져오기
-            let cntResponse = cntDict["response"] as! NSDictionary
-            let cntBody = cntResponse["body"] as! NSDictionary
-            
-            self.totalCount = cntBody["totalCount"] as! NSInteger
-            
-            //let apiDict = try
-            
-        }catch{
-             print("파싱 예외 발생")
-        }
-    }
- */
-    
-    
     
     @IBAction func loginBtn(_ sender: Any) {
         if loginOrLogout.title(for: .normal) == "로그인"{
@@ -134,6 +108,27 @@ class ViewController: UIViewController {
         let foodPoisoning = self.storyboard?.instantiateViewController(withIdentifier: "FoodPoisoningController") as! FoodPoisoningController
         foodPoisoning.title = "식중독예측정보"
         
+        let cfetchRequest:NSFetchRequest<CityListMO> = CityListMO.fetchRequest()
+        let dfetchRequest:NSFetchRequest<DongListMO> = DongListMO.fetchRequest()
+        let cityDesc = NSSortDescriptor(key: "cityCode", ascending: false)
+        let dongDesc = NSSortDescriptor(key: "dongCode", ascending: false)
+        
+        cfetchRequest.sortDescriptors = [cityDesc]
+        dfetchRequest.sortDescriptors = [dongDesc]
+        do{
+        //데이터 가져오기
+        let cresultSet = try self.context.fetch(cfetchRequest)
+        let dresultSet = try self.context.fetch(dfetchRequest)
+        //데이터 순회
+        for imsi in cresultSet{
+            
+        }
+        for imsi in dresultSet{
+        }
+        }catch let e as NSError{
+            print("\(e.localizedDescription)")
+        }
+        
         self.navigationController?.pushViewController(foodPoisoning, animated: true)
     }
     
@@ -155,90 +150,12 @@ class ViewController: UIViewController {
             self.loginOrLogout.setTitle("로그아웃", for: .normal)
             //FoodPoisoningCell
         }
-        
-        //앱이 설치되었을 때 1번만 실행---------------------------------------------------
-        if self.appDelegate.counti == 0 {
-            
-            //비동기적으로 내장 된 csv 데이터 다운 받기
-            DispatchQueue.main.async(execute: {
-                let citylistPath = Bundle.main.path(forResource: "citylist", ofType: "csv")
-                let donglistPath = Bundle.main.path(forResource: "donglist", ofType: "csv")
-                if citylistPath == nil {
-                    print("citylist 경로 없음")
-                    return
-                }else if donglistPath == nil{
-                    print("donglist 경로 없음")
-                    return
-                }
-                
-                var citylistData: String? = nil
-                var donglistData: String? = nil
-                
-                do {
-                    citylistData = try String(contentsOfFile: citylistPath!, encoding: String.Encoding.utf8)
-                    donglistData = try String(contentsOfFile: donglistPath!, encoding: String.Encoding.utf8)
-                    let citysData = citylistData?.csvRows()
-                    let dongsData = donglistData?.csvRows()
-                    var count = 0
-                    for row in citysData!{
-                        if count == 0{
-                            count = count + 1
-                        }else{
-                        //print(row)
-                        //새로 저장할 객체를 생성
-                        let cityObject = NSEntityDescription.insertNewObject(forEntityName: "CityList", into: self.context) as! CityListMO
-                            //print("city리스트: \(object)")
-                        let myInteger = row[0] as NSString
-                        let mmyInteger = myInteger as String
-                        let mmmyInteger = Int32(mmyInteger)
-                        //print(mmmyInteger!)
-                        cityObject.cityCode = mmmyInteger!
-                        cityObject.cityName = row[1]
-                        //coreData에 저장
-                        
-                        do{
-                            try self.context.save()
-                            //print(cityObject.cityCode)
-                        }catch let e as NSError{
-                            print("\(e.localizedDescription)")
-                        }
- 
-                    }
-                    }
-                    
-                        count = 0
-                    for row in dongsData!{
-                        if count == 0 {
-                            count = count + 1
-                        }else{
-                            //print(row)
-                            //새로 저장할 객체를 생성
-                            
-                            let dongObject = NSEntityDescription.insertNewObject(forEntityName: "DongList", into: self.context) as! DongListMO
-                            //print("dong리스트 : \(object)")
-                            let dongParseNSString = row[1] as NSString
-                            let dongParseString = dongParseNSString as String
-                            let dongParseInt = Int32(dongParseString)
-                            //print(dongParseInt)
-                            dongObject.dongCode = dongParseInt!
-                            dongObject.dongName = row[2]
-                            do{
-                                try self.context.save()
-                                //print(dongObject.dongCode)
-                            }catch let e as NSError{
-                                print("\(e.localizedDescription)")
-                            }
-                        }
-                    }
-                    
- 
-                } catch{
-                    print(error)
-                }
-            })
-            self.appDelegate.counti = 1
+        if userDefaults?.value(forKey: "a") == nil{
+            self.download()
         }
-        //---------------------------------------------------------------
+        
+        
+
     }
     
     
@@ -258,6 +175,115 @@ class ViewController: UIViewController {
         }
     }
 
+    
+    
+
+    func download() {
+        //앱이 설치되었을 때 1번만 실행---------------------------------------------------
+       
+            userDefaults?.set(0, forKey: "a")
+            //비동기적으로 내장 된 csv 데이터 다운 받기
+            DispatchQueue.main.async(execute: {
+                guard let citylistPath = Bundle.main.path(forResource: "citylist", ofType: "csv") else{return}
+                guard citylistPath.isEmpty == false else{
+                    print("citylist 경로 없음")
+                    return
+                }
+                
+                var citylistData: String? = nil
+                
+                do {
+                    citylistData = try String(contentsOfFile: citylistPath, encoding: String.Encoding.utf8)
+                    let citysData = citylistData?.csvRows()
+                    var count = 0
+                    for row in citysData!{
+                        if count == 0{
+                            count = count + 1
+                        }else{
+                            //print(row)
+                            //새로 저장할 객체를 생성
+                            let cityObject = NSEntityDescription.insertNewObject(forEntityName: "CityList", into: self.context) as! CityListMO
+                            //print("city리스트: \(object)")
+                            let myInteger = row[0] as NSString
+                            let mmyInteger = myInteger as String
+                            let mmmyInteger = Int32(mmyInteger)
+                            //print(mmmyInteger!)
+                            cityObject.cityCode = mmmyInteger!
+                            cityObject.cityName = row[1]
+  
+                            //coreData에 저장
+                            do{
+                                try self.context.save()
+                                //print(cityObject.cityCode)
+                            }catch let e as NSError{
+                                print("\(e.localizedDescription)")
+                            }
+                            
+                        }
+                    }
+                    
+                } catch{
+                    print(error)
+                }
+                
+                
+                //=====>
+                
+                guard let donglistPath = Bundle.main.path(forResource: "donglist", ofType: "csv") else{return}
+                guard donglistPath.isEmpty == false else{
+                    print("donglist 경로 없음")
+                    return
+                }
+                
+                var donglistData: String? = nil
+                
+                do {
+                    donglistData = try String(contentsOfFile: donglistPath, encoding: String.Encoding.utf8)
+                    let dongsData = donglistData?.csvRows()
+                    var count = 0
+                    for row in dongsData!{
+                        if count == 0{
+                            count = count + 1
+                        }else{
+                            //print(row)
+                            //새로 저장할 객체를 생성
+                            let dongObject = NSEntityDescription.insertNewObject(forEntityName: "DongList", into: self.context) as! DongListMO
+                            //print("city리스트: \(object)")
+                            let myInteger = row[1] as NSString
+                            let mmyInteger = myInteger as String
+                            let mmmyInteger = Int32(mmyInteger)
+                            
+                            let myInteger1 = row[0] as NSString
+                            let mmyInteger1 = myInteger1 as String
+                            let mmmyInteger1 = Int32(mmyInteger1)
+                            
+                            dongObject.dongCode = mmmyInteger!
+                            dongObject.dongName = row[2]
+                            dongObject.cityList?.cityCode = mmmyInteger1!
+                            //print(mmmyInteger!)
+                            //print(mmmyInteger1!)
+                            
+                            //coreData에 저장
+                            do{
+                                try self.context.save()
+                                //print(cityObject.cityCode)
+                            }catch let e as NSError{
+                                print("\(e.localizedDescription)")
+                            }
+                            
+                        }
+                    }
+                    
+                } catch{
+                    print(error)
+                }
+                
+                
+            })
+        
+        
+        //---------------------------------------------------------------
+    }
 
 }
 
