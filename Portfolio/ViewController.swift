@@ -52,7 +52,7 @@ class ViewController: UIViewController {
             let inputid = loginAlert.textFields![0].text
             let inputpw = loginAlert.textFields![1].text
             //서버에 로그인정보 요청
-            let request = Alamofire.request("http://192.168.0.5:8080/aisdugo/mobile/login?pid=\(inputid!)&ppw=\(inputpw!)", method: .get, parameters: nil)
+            let request = Alamofire.request("http://192.168.2.3:8080/portfolio/mobile/login?pid=\(inputid!)&ppw=\(inputpw!)", method: .get, parameters: nil)
             //결과 사용
             request.responseJSON(){
               response in
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
                         self.pnick = self.userDefaults?.object(forKey: "nickname") as? String
                         self.userDefaults?.set((result["pimage"])! as! NSString, forKey: "pimage")
                         self.pimage = self.userDefaults?.object(forKey: "image") as? String
-                        self.title = "\(self.userDefaults!.object(forKey: "nickname")!)님 환영합니다."
+                        self.title = "\(self.userDefaults!.object(forKey: "pnick")!)님 환영합니다."
                         self.loginOrLogout.setTitle("로그아웃", for: .normal)
                     }
                 }
